@@ -112,6 +112,7 @@
       <excludeFolder url="file://$MODULE_DIR$/quickstart/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/quickstart/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/quickstart/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/quickstart/vendor/laravel/breeze" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

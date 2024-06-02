@@ -120,6 +120,7 @@
       <path value="$PROJECT_DIR$/quickstart/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/quickstart/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/quickstart/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/quickstart/vendor/laravel/breeze" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
