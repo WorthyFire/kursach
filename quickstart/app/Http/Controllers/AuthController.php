@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Verified;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,10 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => 2,  // Устанавливаем роль "user"
         ]);
+
+        $user->sendEmailVerificationNotification();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -57,4 +61,21 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Успешный вышход из системы']);
     }
+
+    public function verify(Request $request)
+    {
+        $user = User::find($request->route('id'));
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email уже подтвержден'], 400);
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return response()->json(['message' => 'Email verified successfully']);
+    }
 }
+
+

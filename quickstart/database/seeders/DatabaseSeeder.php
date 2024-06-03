@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             CoffeeshopsTableSeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
+            DrinksTableSeeder::class,
+
         ]);
     }
 }
