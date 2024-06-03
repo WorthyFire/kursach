@@ -9,30 +9,62 @@ class CoffeeshopController extends Controller
 {
     public function index()
     {
-        return Coffeeshop::with('drinks', 'reviews')->get();
+        try {
+            $coffeeshops = Coffeeshop::with('drinks', 'reviews')->get();
+            return response()->json($coffeeshops);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Что-то пошло не так'], 500);
+        }
     }
 
     public function show($id)
     {
-        return Coffeeshop::with('drinks', 'reviews')->find($id);
+        try {
+            $coffeeshop = Coffeeshop::with('drinks', 'reviews')->find($id);
+            if (!$coffeeshop) {
+                return response()->json(['error' => 'Кофейня не была найдена'], 404);
+            }
+            return response()->json($coffeeshop);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Что-то пошло не так'], 500);
+        }
     }
 
     public function store(Request $request)
     {
-        $coffeeshop = Coffeeshop::create($request->all());
-        return response()->json($coffeeshop, 201);
+        try {
+            $coffeeshop = Coffeeshop::create($request->all());
+            return response()->json($coffeeshop, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Что-то пошло не так'], 500);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $coffeeshop = Coffeeshop::find($id);
-        $coffeeshop->update($request->all());
-        return response()->json($coffeeshop, 200);
+        try {
+            $coffeeshop = Coffeeshop::find($id);
+            if (!$coffeeshop) {
+                return response()->json(['error' => 'Кофейня не была найдена'], 404);
+            }
+            $coffeeshop->update($request->all());
+            return response()->json($coffeeshop, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Что-то пошло не так'], 500);
+        }
     }
 
     public function destroy($id)
     {
-        Coffeeshop::destroy($id);
-        return response()->json(null, 204);
+        try {
+            $coffeeshop = Coffeeshop::find($id);
+            if (!$coffeeshop) {
+                return response()->json(['error' => 'Кофейня не была найдена'], 404);
+            }
+            $coffeeshop->delete();
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Что-то пошло не так'], 500);
+        }
     }
 }
