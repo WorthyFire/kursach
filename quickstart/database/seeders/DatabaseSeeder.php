@@ -16,10 +16,6 @@ class DatabaseSeeder extends Seeder
 
         // Вызов нового сидера
         $this->call([
-            CoffeeshopsTableSeeder::class,
-            RolesTableSeeder::class,
-            UsersTableSeeder::class,
-            DrinksTableSeeder::class,
 
         ]);
     }

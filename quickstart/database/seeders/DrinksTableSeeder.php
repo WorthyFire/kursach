@@ -14,7 +14,7 @@ class DrinksTableSeeder extends Seeder
                 'name' => 'Latte',
                 'ingredients' => 'Milk, Coffee',
                 'category' => 'Hot Drinks',
-                'photo' => 'latte.jpg', // Замените на реальный путь к изображению
+                'photo' => 'latte.jpg',
                 'description' => 'A delicious latte',
                 'coffeeshop_id' => 8, // ID кофейни из базы данных
                 'created_at' => now(),
@@ -24,7 +24,7 @@ class DrinksTableSeeder extends Seeder
                 'name' => 'Cappuccino',
                 'ingredients' => 'Milk, Coffee',
                 'category' => 'Hot Drinks',
-                'photo' => 'cappuccino.jpg', // Замените на реальный путь к изображению
+                'photo' => 'cappuccino.jpg',
                 'description' => 'A classic cappuccino',
                 'coffeeshop_id' => 9, // ID кофейни из базы данных
                 'created_at' => now(),
@@ -34,9 +34,9 @@ class DrinksTableSeeder extends Seeder
                 'name' => 'Espresso',
                 'ingredients' => 'Coffee',
                 'category' => 'Hot Drinks',
-                'photo' => 'espresso.jpg', // Замените на реальный путь к изображению
+                'photo' => 'espresso.jpg',
                 'description' => 'A strong espresso',
-                'coffeeshop_id' => 10, // ID кофейни из базы данных
+                'coffeeshop_id' => 10,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

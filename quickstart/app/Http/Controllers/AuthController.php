@@ -43,7 +43,7 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Неавторизован'], 401);
+            return response()->json(['message' => 'Неверные данные'], 401);
         }
 
         $user = Auth::user();
@@ -67,7 +67,7 @@ class AuthController extends Controller
         $user = User::find($request->route('id'));
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email уже подтвержден'], 400);
+            return response()->json(['message' => 'Ваша почта уже подтверждена'], 200);
         }
 
         if ($user->markEmailAsVerified()) {
@@ -77,5 +77,3 @@ class AuthController extends Controller
         return response()->json(['message' => 'Email verified successfully']);
     }
 }
-
-

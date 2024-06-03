@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coffeeshop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoffeeshopController extends Controller
 {
@@ -32,6 +33,10 @@ class CoffeeshopController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->role_id !== 1) {  // Проверяем роль пользователя
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
+
         try {
             $coffeeshop = Coffeeshop::create($request->all());
             return response()->json($coffeeshop, 201);
@@ -42,6 +47,10 @@ class CoffeeshopController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role_id !== 1) {  // Проверяем роль пользователя
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
+
         try {
             $coffeeshop = Coffeeshop::find($id);
             if (!$coffeeshop) {
@@ -56,6 +65,10 @@ class CoffeeshopController extends Controller
 
     public function destroy($id)
     {
+        if (Auth::user()->role_id !== 1) {  // Проверяем роль пользователя
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
+
         try {
             $coffeeshop = Coffeeshop::find($id);
             if (!$coffeeshop) {

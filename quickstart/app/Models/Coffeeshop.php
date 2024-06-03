@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,11 @@ class Coffeeshop extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'address', 'contact', 'photo', 'hours'
+        'name',
+        'address',
+        'contact',
+        'photo',
+        'description'
     ];
 
     public function drinks()
