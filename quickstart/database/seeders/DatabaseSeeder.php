@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Drink;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +17,10 @@ class DatabaseSeeder extends Seeder
 
         // Вызов нового сидера
         $this->call([
-
+            coffeeshopstableseeder::class,
+            DrinksTableSeeder::class,
+            rolestableSeeder::class,
+            userstableseeder::class,
         ]);
     }
 }
