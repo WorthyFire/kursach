@@ -6,9 +6,11 @@ use App\Http\Controllers\DrinkController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
-// Маршруты для аутентификации
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::post('/register',[AuthController::class, 'register'])->name('register');
+Route::post('/login',[AuthController::class, 'login']);
+
 
 // Маршрут для выхода из системы защищен аутентификацией
 Route::middleware('auth:sanctum')->group(function () {
