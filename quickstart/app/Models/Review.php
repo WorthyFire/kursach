@@ -1,5 +1,4 @@
 <?php
-namespace App\Models;
 
 namespace App\Models;
 
@@ -11,7 +10,7 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'coffeeshop_id', 'drink_id', 'rating', 'comment'
+        'user_id', 'coffeeshop_id', 'rating', 'comment'
     ];
 
     public function user()
@@ -22,10 +21,5 @@ class Review extends Model
     public function coffeeshop()
     {
         return $this->belongsTo(Coffeeshop::class);
-    }
-
-    public function drink()
-    {
-        return $this->belongsTo(Drink::class);
     }
 }

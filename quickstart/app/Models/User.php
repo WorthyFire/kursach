@@ -11,16 +11,11 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id',
+        'name', 'email', 'password', 'role_id',
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
-        'role_id', // Скрываем поле role_id
+        'password', 'remember_token', 'role_id'
     ];
 
     protected $casts = [
@@ -40,7 +35,14 @@ class User extends Authenticatable
     {
         return $this->role->name;
     }
+
+    public function isAdmin()
+    {
+        return $this->role->name === 'admin';
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
-
-
-
