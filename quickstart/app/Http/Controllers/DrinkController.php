@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Drink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class DrinkController extends Controller
 {
@@ -48,14 +49,29 @@ class DrinkController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->role_id !== 1) {  // Проверка на роль администратора
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
+
         try {
-            // Проверка на роль администратора
-            if (Auth::user()->role->name !== 'admin') {
-                return response()->json(['message' => 'У вас нет прав для выполнения этого действия.'], 403);
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'ingredients' => 'required|string',
+                'category' => 'required|string|max:255',
+                'description' => 'required|string',
+                'photo' => 'nullable|image|max:1024', // Например, проверка, что файл - изображение, размером не более 1MB
+                'coffeeshop_id' => 'required|exists:coffeeshops,id',
+            ]);
+
+            // Проверка на уникальность комбинации названия напитка и идентификатора кофейни
+            if (Drink::where('name', $request->name)->where('coffeeshop_id', $request->coffeeshop_id)->exists()) {
+                return response()->json(['error' => 'Напиток с таким названием уже существует в этой кофейне'], 422);
             }
 
             $drink = Drink::create($request->all());
             return response()->json($drink, 201);
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Что-то пошло не так'], 500);
         }
@@ -63,18 +79,37 @@ class DrinkController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role_id !== 1) {  // Проверка на роль администратора
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
+
         try {
-            // Проверка на роль администратора
-            if (Auth::user()->role->name !== 'admin') {
-                return response()->json(['message' => 'У вас нет прав для выполнения этого действия.'], 403);
-            }
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'ingredients' => 'required|string',
+                'category' => 'required|string|max:255',
+                'description' => 'required|string',
+                'photo' => 'nullable|image|max:1024', // Например, проверка, что файл - изображение, размером не более 1MB
+                'coffeeshop_id' => 'required|exists:coffeeshops,id',
+            ]);
 
             $drink = Drink::find($id);
             if (!$drink) {
                 return response()->json(['error' => 'Напиток не найден'], 404);
             }
+
+            // Проверка на уникальность комбинации названия напитка и идентификатора кофейни
+            if (Drink::where('name', $request->name)
+                ->where('coffeeshop_id', $request->coffeeshop_id)
+                ->where('id', '!=', $id)
+                ->exists()) {
+                return response()->json(['error' => 'Напиток с таким названием уже существует в этой кофейне'], 422);
+            }
+
             $drink->update($request->all());
             return response()->json($drink, 200);
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Что-то пошло не так'], 500);
         }
@@ -82,12 +117,11 @@ class DrinkController extends Controller
 
     public function destroy($id)
     {
-        try {
-            // Проверка на роль администратора
-            if (Auth::user()->role->name !== 'admin') {
-                return response()->json(['message' => 'У вас нет прав для выполнения этого действия.'], 403);
-            }
+        if (Auth::user()->role_id !== 1) {  // Проверка на роль администратора
+            return response()->json(['error' => 'Доступ запрещен'], 403);
+        }
 
+        try {
             $drink = Drink::find($id);
             if (!$drink) {
                 return response()->json(['error' => 'Напиток не найден'], 404);
@@ -99,3 +133,4 @@ class DrinkController extends Controller
         }
     }
 }
+

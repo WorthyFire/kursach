@@ -29,11 +29,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/coffeeshops', [CoffeeshopController::class, 'index']);
 Route::get('/coffeeshops/{id}', [CoffeeshopController::class, 'show']);
 
-//Маршруты для напитков, доступные для всех пользователей
+// Маршруты для напитков, доступные для всех пользователей
 Route::get('/drinks', [DrinkController::class, 'index']);
 Route::get('/drinks/{id}', [DrinkController::class, 'show']);
 
-//Маршруты для отзывов, доступные для всех пользователей
+// Маршруты для отзывов, доступные для всех пользователей
 Route::get('/reviews', [ReviewController::class, 'index']);
 Route::get('/reviews/{id}', [ReviewController::class, 'show']);
 
@@ -67,3 +67,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 });
+
